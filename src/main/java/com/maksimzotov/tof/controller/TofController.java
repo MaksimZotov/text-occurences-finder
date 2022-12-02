@@ -43,7 +43,8 @@ public class TofController {
             while (matcher.find()) {
                 indexes.add(new Pair<>(matcher.start(), matcher.end() - 1));
             }
-            return ResponseEntity.ok(new SuccessResult(indexes));
+            Float percent = (float) indexes.size() * findText.length() / mainText.length();
+            return ResponseEntity.ok(new SuccessResult(indexes, percent));
         }
     }
 }
