@@ -5,6 +5,9 @@ import com.maksimzotov.tof.model.FindOccurrencesRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @RestController
 @RequestMapping("/api")
 public class TofController {
@@ -24,6 +27,12 @@ public class TofController {
         }
         if (errorDescription != null) {
             return ResponseEntity.badRequest().body(new ErrorMessage(errorDescription));
+        }
+
+        Pattern pattern = Pattern.compile(findText);
+        Matcher matcher = pattern.matcher(mainText);
+        if (!matcher.find()) {
+            return ResponseEntity.ok(new ErrorMessage("Вхождений не найдено"));
         }
 
         return null;
